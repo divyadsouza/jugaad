@@ -6,7 +6,7 @@
     <title>Jugaad — The Art of Survival</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
@@ -16,45 +16,240 @@
     <div class="bg-glow bg-glow--2"></div>
     <div class="bg-glow bg-glow--3"></div>
 
+    <!-- Floating CSS Particles -->
+    <div class="particles" aria-hidden="true">
+        <div class="particle particle--1"></div>
+        <div class="particle particle--2"></div>
+        <div class="particle particle--3"></div>
+        <div class="particle particle--4"></div>
+        <div class="particle particle--5"></div>
+        <div class="particle particle--6"></div>
+        <div class="particle particle--7"></div>
+        <div class="particle particle--8"></div>
+        <div class="particle particle--9"></div>
+        <div class="particle particle--10"></div>
+        <div class="particle particle--11"></div>
+        <div class="particle particle--12"></div>
+        <div class="particle particle--13"></div>
+        <div class="particle particle--14"></div>
+        <div class="particle particle--15"></div>
+        <div class="particle particle--16"></div>
+        <div class="particle particle--17"></div>
+        <div class="particle particle--18"></div>
+        <div class="particle particle--19"></div>
+        <div class="particle particle--20"></div>
+        <div class="particle particle--21"></div>
+        <div class="particle particle--22"></div>
+        <div class="particle particle--23"></div>
+        <div class="particle particle--24"></div>
+        <div class="particle particle--25"></div>
+        <div class="particle particle--26"></div>
+        <div class="particle particle--27"></div>
+        <div class="particle particle--28"></div>
+        <div class="particle particle--29"></div>
+        <div class="particle particle--30"></div>
+    </div>
+
     <!-- ===== SCREEN 1: Landing ===== -->
     <div class="screen screen-landing active" id="screen-landing">
-        <nav class="nav">
-            <div class="nav-brand">JUGAAD</div>
-            <div class="nav-tagline">The Art of Survival</div>
-            <a href="/game" class="nav-game-link">Play the Game</a>
-        </nav>
 
-        <div class="hero">
-            <h1>JUGAAD</h1>
-            <div class="tagline">The Art of Survival</div>
-            
-            <div class="hero-story">
-                In the year 2085, Earth's last ecosystems survive in digital archives. You are an Environmental Warrior, fighting through polluted wastelands to reclaim what was lost. Using Jugaad—the art of resourceful innovation—you transform waste into weapons and pollution into power. Each demon you defeat, each piece of trash you recycle, brings life back to a dying world. This is not just a game—it's our future. Will you fight for Earth?
+        <!-- Hero Section -->
+        <section class="hero">
+            <!-- Sonar rings behind Earth -->
+            <div class="sonar-rings" aria-hidden="true">
+                <div class="sonar-ring sonar-ring--1"></div>
+                <div class="sonar-ring sonar-ring--2"></div>
+                <div class="sonar-ring sonar-ring--3"></div>
             </div>
-            
-            <div class="hero-orb" id="hero-orb">
-                <div class="hero-orb-inner"></div>
-                <div class="hero-orb-ring"></div>
-                <div class="hero-orb-ring hero-orb-ring--2"></div>
-            </div>
-        </div>
 
-        <div class="mode-section">
+            <!-- Animated SVG Earth -->
+            <div class="earth-container">
+                <div class="earth-glow"></div>
+                <svg class="earth-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="ocean" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stop-color="#1a5276"/>
+                            <stop offset="100%" stop-color="#0e3d5c"/>
+                        </radialGradient>
+                        <radialGradient id="atmosphere" cx="50%" cy="50%" r="50%">
+                            <stop offset="85%" stop-color="transparent"/>
+                            <stop offset="95%" stop-color="rgba(45, 212, 191, 0.15)"/>
+                            <stop offset="100%" stop-color="rgba(45, 212, 191, 0.05)"/>
+                        </radialGradient>
+                        <radialGradient id="earth-light" cx="35%" cy="35%" r="65%">
+                            <stop offset="0%" stop-color="rgba(255,255,255,0.12)"/>
+                            <stop offset="100%" stop-color="transparent"/>
+                        </radialGradient>
+                        <clipPath id="earth-clip">
+                            <circle cx="100" cy="100" r="85"/>
+                        </clipPath>
+                    </defs>
+                    <!-- Ocean base -->
+                    <circle cx="100" cy="100" r="85" fill="url(#ocean)"/>
+                    <!-- Continents group (rotates) -->
+                    <g clip-path="url(#earth-clip)" class="earth-continents">
+                        <!-- North America -->
+                        <path d="M55 45 Q60 38 72 35 Q78 33 82 38 Q85 42 80 48 Q78 55 72 60 Q68 65 60 68 Q52 70 48 65 Q42 58 45 52 Q48 48 55 45Z" fill="#2d8a5e" opacity="0.85"/>
+                        <!-- South America -->
+                        <path d="M68 80 Q74 75 78 78 Q82 82 80 90 Q78 100 75 108 Q72 115 68 118 Q64 120 62 115 Q58 108 60 98 Q62 88 68 80Z" fill="#247a4d" opacity="0.8"/>
+                        <!-- Europe -->
+                        <path d="M95 38 Q100 34 108 36 Q112 38 114 42 Q116 46 112 50 Q108 52 104 50 Q100 48 96 44 Q94 42 95 38Z" fill="#2d8a5e" opacity="0.85"/>
+                        <!-- Africa -->
+                        <path d="M102 55 Q108 52 114 55 Q120 60 122 70 Q124 82 120 92 Q116 100 110 105 Q104 108 100 102 Q96 95 98 85 Q100 72 102 55Z" fill="#247a4d" opacity="0.8"/>
+                        <!-- Asia -->
+                        <path d="M118 35 Q128 30 140 33 Q150 36 155 44 Q158 52 154 60 Q148 68 140 70 Q132 72 125 68 Q118 64 116 55 Q114 46 118 35Z" fill="#2d8a5e" opacity="0.85"/>
+                        <!-- Australia -->
+                        <path d="M148 90 Q155 86 162 88 Q168 92 166 98 Q164 104 158 106 Q152 108 148 104 Q144 98 148 90Z" fill="#247a4d" opacity="0.8"/>
+                        <!-- Duplicate set offset for seamless rotation -->
+                        <g transform="translate(200, 0)">
+                            <path d="M55 45 Q60 38 72 35 Q78 33 82 38 Q85 42 80 48 Q78 55 72 60 Q68 65 60 68 Q52 70 48 65 Q42 58 45 52 Q48 48 55 45Z" fill="#2d8a5e" opacity="0.85"/>
+                            <path d="M68 80 Q74 75 78 78 Q82 82 80 90 Q78 100 75 108 Q72 115 68 118 Q64 120 62 115 Q58 108 60 98 Q62 88 68 80Z" fill="#247a4d" opacity="0.8"/>
+                            <path d="M95 38 Q100 34 108 36 Q112 38 114 42 Q116 46 112 50 Q108 52 104 50 Q100 48 96 44 Q94 42 95 38Z" fill="#2d8a5e" opacity="0.85"/>
+                            <path d="M102 55 Q108 52 114 55 Q120 60 122 70 Q124 82 120 92 Q116 100 110 105 Q104 108 100 102 Q96 95 98 85 Q100 72 102 55Z" fill="#247a4d" opacity="0.8"/>
+                            <path d="M118 35 Q128 30 140 33 Q150 36 155 44 Q158 52 154 60 Q148 68 140 70 Q132 72 125 68 Q118 64 116 55 Q114 46 118 35Z" fill="#2d8a5e" opacity="0.85"/>
+                            <path d="M148 90 Q155 86 162 88 Q168 92 166 98 Q164 104 158 106 Q152 108 148 104 Q144 98 148 90Z" fill="#247a4d" opacity="0.8"/>
+                        </g>
+                    </g>
+                    <!-- Atmosphere overlay -->
+                    <circle cx="100" cy="100" r="85" fill="url(#atmosphere)"/>
+                    <!-- Light reflection -->
+                    <circle cx="100" cy="100" r="85" fill="url(#earth-light)"/>
+                    <!-- Thin atmosphere ring -->
+                    <circle cx="100" cy="100" r="87" fill="none" stroke="rgba(45,212,191,0.2)" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <!-- Title -->
+            <h1 class="hero-title">JUGAAD</h1>
+            <div class="hero-subtitle">The Art of Survival</div>
+            <p class="hero-tagline">Where innovation meets desperation. Where survival becomes art.</p>
+        </section>
+
+        <!-- Narrative Section -->
+        <section class="narrative">
+            <div class="glass-card narrative-card">
+                <h2 class="narrative-title">The Story</h2>
+                <p class="narrative-text">
+                    In 2050, Earth is gasping. The air tastes like rust. The oceans have turned grey.
+                    The forests exist only in memory &mdash; digital fragments preserved by machines that helped destroy them.
+                    But from the rubble rises <strong>JUGAAD</strong> &mdash; the ancient art of making something from nothing.
+                    Armed with recycled tech and raw determination, the last generation fights back.
+                    Not with armies. With creativity.
+                </p>
+            </div>
+        </section>
+
+        <!-- Three Experience Cards -->
+        <section class="experiences">
+            <div class="section-label">
+                <span class="section-label-line"></span>
+                CHOOSE YOUR PATH
+                <span class="section-label-line"></span>
+            </div>
+            <div class="experience-grid">
+
+                <!-- Card 1: The Assembler (Voice Game) -->
+                <div class="experience-card experience-card--gold" id="exp-assembler">
+                    <div class="experience-icon">
+                        <!-- Animated Soundwave/Microphone SVG -->
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="exp-svg">
+                            <rect x="26" y="8" width="12" height="28" rx="6" stroke="currentColor" stroke-width="2.5"/>
+                            <path d="M18 30v4a14 14 0 0028 0v-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="32" y1="48" x2="32" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <line x1="24" y1="56" x2="40" y2="56" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <!-- Soundwave lines -->
+                            <line x1="8" y1="26" x2="8" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="wave-line wave-line--1"/>
+                            <line x1="14" y1="20" x2="14" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="wave-line wave-line--2"/>
+                            <line x1="50" y1="20" x2="50" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="wave-line wave-line--3"/>
+                            <line x1="56" y1="26" x2="56" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="wave-line wave-line--4"/>
+                        </svg>
+                    </div>
+                    <h3 class="experience-name">The Assembler</h3>
+                    <p class="experience-desc">A voice-activated AI that collects your nature memories... then reveals the cost.</p>
+                </div>
+
+                <!-- Card 2: Sky Rescue -->
+                <a href="/skyrescue" class="experience-card experience-card--teal">
+                    <div class="experience-icon">
+                        <!-- Cloud + Flying Figure SVG -->
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="exp-svg">
+                            <!-- Clouds -->
+                            <path d="M10 32 Q10 26 16 26 Q18 20 26 20 Q32 20 34 26 Q40 24 40 32 Z" stroke="currentColor" stroke-width="2" fill="none" class="cloud cloud--1"/>
+                            <path d="M36 22 Q36 18 40 18 Q42 14 48 14 Q52 14 54 18 Q58 16 58 22 Z" stroke="currentColor" stroke-width="2" fill="none" class="cloud cloud--2"/>
+                            <!-- Flying figure -->
+                            <g class="flyer">
+                                <circle cx="32" cy="42" r="3" stroke="currentColor" stroke-width="2"/>
+                                <line x1="32" y1="45" x2="32" y2="54" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="32" y1="48" x2="26" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="32" y1="48" x2="38" y2="44" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="32" y1="54" x2="28" y2="58" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="32" y1="54" x2="36" y2="58" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Cape/wing -->
+                                <path d="M26 44 Q22 50 24 56" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                                <path d="M38 44 Q42 50 40 56" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <h3 class="experience-name">Sky Rescue</h3>
+                    <p class="experience-desc">Soar through poisoned skies. Defeat pollution titans. Restore the atmosphere.</p>
+                </a>
+
+                <!-- Card 3: Jugaad Runner -->
+                <a href="/game" class="experience-card experience-card--emerald">
+                    <div class="experience-icon">
+                        <!-- Running Figure + Jetpack SVG -->
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="exp-svg">
+                            <!-- Runner -->
+                            <circle cx="30" cy="14" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M30 18 L30 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M30 24 L22 30" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M30 24 L38 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M30 32 L22 42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M30 32 L38 40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <!-- Jetpack -->
+                            <rect x="33" y="20" width="6" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <!-- Flames -->
+                            <g class="jetpack-flames">
+                                <path d="M34 32 Q33 38 35 42" stroke="#ffd8a2" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+                                <path d="M36 32 Q37 40 36 44" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+                                <path d="M38 32 Q39 37 37 41" stroke="#ffd8a2" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+                            </g>
+                            <!-- Ground line -->
+                            <line x1="8" y1="52" x2="56" y2="52" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+                            <!-- Speed lines -->
+                            <line x1="8" y1="22" x2="18" y2="22" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.4" class="speed-line speed-line--1"/>
+                            <line x1="4" y1="28" x2="16" y2="28" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.3" class="speed-line speed-line--2"/>
+                            <line x1="6" y1="34" x2="14" y2="34" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.35" class="speed-line speed-line--3"/>
+                        </svg>
+                    </div>
+                    <h3 class="experience-name">Jugaad Runner</h3>
+                    <p class="experience-desc">Run. Shoot trash monsters. Save the planet. Try not to get recycled.</p>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Voice Game Memory Selection (preserved for app.js) -->
+        <section class="mode-section" id="voice-game-section" style="display:none;">
             <div class="section-label">
                 <span class="section-label-line"></span>
                 SELECT YOUR MEMORY
                 <span class="section-label-line"></span>
             </div>
             <div class="mode-grid" id="mode-grid"></div>
-        </div>
+            <div class="launch-zone">
+                <button class="btn-launch" id="btn-launch" disabled>
+                    <span class="btn-launch-text">Begin</span>
+                    <span class="btn-launch-glow"></span>
+                </button>
+                <p class="launch-hint">Select a memory above, then speak.</p>
+            </div>
+        </section>
 
-        <div class="launch-zone">
-            <button class="btn-launch" id="btn-launch" disabled>
-                <span class="btn-launch-text">Begin</span>
-                <span class="btn-launch-glow"></span>
-            </button>
-            <p class="launch-hint">Select a memory above, then speak.</p>
-        </div>
+        <!-- Footer -->
+        <footer class="site-footer">
+            Built for DonsHack '26 &nbsp;|&nbsp; Jugaad: The Art of Survival
+        </footer>
     </div>
 
     <!-- ===== SCREEN 2: Game ===== -->
@@ -110,6 +305,7 @@
     <div class="reveal-overlay" id="reveal-overlay">
         <div class="reveal-content" id="reveal-content">
             <div class="reveal-impact" id="reveal-impact"></div>
+            <button class="reveal-dismiss" id="reveal-dismiss" onclick="this.closest('.reveal-overlay').classList.remove('active','glitching'); document.body.classList.remove('glitching','revealed');">Continue — I've seen the truth</button>
         </div>
     </div>
 
@@ -122,6 +318,13 @@
         </div>
     </div>
 
+    <script>
+        // Wire up The Assembler card to show voice game section
+        document.getElementById('exp-assembler').addEventListener('click', function() {
+            document.getElementById('voice-game-section').style.display = 'block';
+            document.getElementById('voice-game-section').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
     <script src="/static/js/app.js"></script>
 </body>
 </html>

@@ -20,6 +20,8 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
 
 from personas import get_mode, list_modes, BASE_SYSTEM, CO2_PER_EXCHANGE
 
@@ -32,6 +34,23 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Jugaad — The Art of Survival")
+
+
+class NoCacheMiddleware(BaseHTTPMiddleware):
+    """Prevent browsers from caching static JS/CSS/HTML (avoids 304 stale files)."""
+
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        if request.url.path.endswith((".js", ".css", ".html")) or request.url.path in (
+            "/", "/game", "/skyrescue",
+        ):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+        return response
+
+
+app.add_middleware(NoCacheMiddleware)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 _openai_client: OpenAI | None = None
@@ -55,6 +74,10 @@ async def index():
 @app.get("/game")
 async def game():
     return FileResponse("static/game.html")
+
+@app.get("/skyrescue")
+async def skyrescue():
+    return FileResponse("static/skyrescue.html")
 
 
 @app.get("/api/modes")
@@ -102,6 +125,8 @@ async def websocket_handler(ws: WebSocket):
 
                 elif cmd == "stop_recording":
                     if session:
+                        # Flush BEFORE clearing the flag so the
+                        # transcript callback can still process results
                         await session.flush_transcript()
                         session._user_recording = False
                         logger.info("User stopped recording")

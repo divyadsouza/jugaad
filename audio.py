@@ -40,6 +40,7 @@ class DeepgramStream:
         self.on_transcript = on_transcript
         self._ws = None
         self._recv_task = None
+        self._keepalive_task = None
         self._utterance_parts: list[str] = []
         self._interim_text = ""
 
@@ -61,6 +62,7 @@ class DeepgramStream:
         headers = {"Authorization": f"Token {self.api_key}"}
         self._ws = await websockets.connect(url, additional_headers=headers)
         self._recv_task = asyncio.create_task(self._receive_loop())
+        self._keepalive_task = asyncio.create_task(self._keepalive_loop())
         logger.info("Deepgram WebSocket connected")
 
     async def send_audio(self, audio_bytes: bytes):
@@ -83,6 +85,12 @@ class DeepgramStream:
             logger.info("Flush: no accumulated utterance parts")
 
     async def close(self):
+        if self._keepalive_task:
+            self._keepalive_task.cancel()
+            try:
+                await self._keepalive_task
+            except asyncio.CancelledError:
+                pass
         if self._ws and self._ws.state == WsState.OPEN:
             await self._ws.send(json.dumps({"type": "CloseStream"}))
             await self._ws.close()
@@ -93,6 +101,21 @@ class DeepgramStream:
             except asyncio.CancelledError:
                 pass
         logger.info("Deepgram WebSocket closed")
+
+    async def _keepalive_loop(self):
+        """Send KeepAlive text frames every 5s to prevent Deepgram's 10s timeout."""
+        try:
+            while True:
+                await asyncio.sleep(5)
+                if self._ws and self._ws.state == WsState.OPEN:
+                    await self._ws.send(json.dumps({"type": "KeepAlive"}))
+                    logger.debug("Sent KeepAlive to Deepgram")
+                else:
+                    break
+        except asyncio.CancelledError:
+            pass
+        except Exception as e:
+            logger.error(f"KeepAlive loop error: {e}")
 
     async def _receive_loop(self):
         try:

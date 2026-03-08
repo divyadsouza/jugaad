@@ -169,7 +169,12 @@ const AudioEngine = {
         const processor = micCtx.createScriptProcessor(4096, 1, 1);
         processor.onaudioprocess = (e) => {
             if (!State.ws || State.ws.readyState !== WebSocket.OPEN) return;
-            if (!State.isSessionReady || State.isTTSPlaying) return;
+            if (!State.isSessionReady) return;
+            // Always send audio — server-side _user_recording flag controls
+            // whether transcripts are processed, and the Deepgram KeepAlive
+            // loop on the server prevents the 10s timeout (NET-0001).
+            // Skipping during TTS avoids echo but still keeps the connection fed.
+            if (State.isTTSPlaying) return;
 
             const float32 = e.inputBuffer.getChannelData(0);
             const int16 = new Int16Array(float32.length);
@@ -187,8 +192,6 @@ const AudioEngine = {
         silentGain.connect(micCtx.destination);
 
         State.micProcessor = { processor, source, ctx: micCtx };
-
-        this._sendSilence();
     },
 
     stopMic() {
@@ -243,31 +246,6 @@ const AudioEngine = {
         }
     },
 
-    _sendSilence() {
-        // Send continuous silence to keep Deepgram connection alive
-        // and to flush when user stops speaking
-        if (!State.ws || State.ws.readyState !== WebSocket.OPEN) return;
-
-        const chunkSize = 320; // 20ms at 16kHz
-        const silence = new ArrayBuffer(chunkSize);
-        const view = new Uint8Array(silence);
-        // All zeros = silence
-        
-        // Send silence immediately to flush any pending speech
-        State.ws.send(silence);
-        
-        // Then continue sending silence periodically to keep connection alive
-        // This prevents Deepgram from disconnecting after 12s of silence
-        if (this._silenceInterval) clearInterval(this._silenceInterval);
-        
-        this._silenceInterval = setInterval(() => {
-            if (State.ws && State.ws.readyState === WebSocket.OPEN && State.isSessionReady) {
-                State.ws.send(silence);
-            } else {
-                clearInterval(this._silenceInterval);
-            }
-        }, 20); // Send silence every 20ms
-    },
 };
 
 /* ---------- 4. Connection ---------- */
@@ -313,10 +291,8 @@ const Connection = {
         switch (msg.type) {
             case 'ready':
                 State.isSessionReady = true;
-                UI.setStatus('listening', 'Your turn — press Speak');
-                Waveform.setMode('listening');
-                SpeakBtn.enable();
-                SpeakBtn._startSilenceStream();
+                // Don't enable Speak yet — wait for greeting TTS to finish playing.
+                // The Speak button is enabled in AudioEngine.playMP3 → source.onended.
                 break;
 
             case 'transcript':
@@ -591,7 +567,6 @@ const SpeakBtn = {
     btn: null,
     label: null,
     hint: null,
-    _silenceInterval: null,
 
     init() {
         this.btn = document.getElementById('btn-speak');
@@ -600,10 +575,6 @@ const SpeakBtn = {
         if (!this.btn) return;
 
         this.btn.addEventListener('click', () => this.toggle());
-        
-        // Start sending silence immediately when session is ready
-        // This keeps Deepgram connection alive
-        this._startSilenceStream();
     },
 
     toggle() {
@@ -618,8 +589,6 @@ const SpeakBtn = {
             Waveform.setMode('idle');
 
             if (State.ws && State.ws.readyState === WebSocket.OPEN) {
-                // Send immediate silence to flush any buffered speech
-                this._sendFlushSilence();
                 State.ws.send(JSON.stringify({ type: 'stop_recording' }));
             }
         } else {
@@ -637,34 +606,6 @@ const SpeakBtn = {
                 State.ws.send(JSON.stringify({ type: 'start_recording' }));
             }
         }
-    },
-
-    _sendFlushSilence() {
-        // Send a short burst of silence to trigger Deepgram's utterance end
-        if (!State.ws || State.ws.readyState !== WebSocket.OPEN) return;
-        
-        // Send 500ms of silence immediately
-        const chunkSize = 320; // 20ms at 16kHz
-        const numChunks = 25; // 25 * 20ms = 500ms
-        
-        for (let i = 0; i < numChunks; i++) {
-            const silence = new ArrayBuffer(chunkSize);
-            State.ws.send(silence);
-        }
-    },
-
-    _startSilenceStream() {
-        // Continuous silence stream to keep Deepgram connection alive
-        if (this._silenceInterval) clearInterval(this._silenceInterval);
-        
-        this._silenceInterval = setInterval(() => {
-            if (State.ws && State.ws.readyState === WebSocket.OPEN && 
-                State.isSessionReady && !State.isRecording) {
-                const chunkSize = 320; // 20ms at 16kHz
-                const silence = new ArrayBuffer(chunkSize);
-                State.ws.send(silence);
-            }
-        }, 20); // Send silence every 20ms
     },
 
     enable() {

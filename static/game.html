@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jugaad Runner — Environment Warrior</title>
+    <title>Jugaad Runner — The Scrappy Eco Warrior</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -19,44 +19,65 @@
     <div class="game-wrapper" id="game-wrapper">
         <canvas id="game-canvas"></canvas>
 
-        <!-- HUD overlay -->
-        <div class="hud" id="hud">
-            <div class="hud-left">
-                <div class="hud-item">
-                    <span class="hud-label">SCORE</span>
-                    <span class="hud-value" id="hud-score">0</span>
-                </div>
-                <div class="hud-item">
-                    <span class="hud-label">DISTANCE</span>
-                    <span class="hud-value" id="hud-distance">0m</span>
-                </div>
-                <div class="hud-item fire-types" id="fire-types">
-                    <span class="hud-label">FIRE TYPE</span>
-                    <div class="fire-type-list">
-                        <div class="fire-type" data-type="PURIFICATION">
-                            <span class="fire-key">1</span>
-                            <span class="fire-name">Purification</span>
-                        </div>
-                        <div class="fire-type locked" data-type="SOLAR_FLARE">
-                            <span class="fire-key">2</span>
-                            <span class="fire-name">Solar Flare</span>
-                        </div>
-                        <div class="fire-type locked" data-type="WASTE_RECYCLER">
-                            <span class="fire-key">3</span>
-                            <span class="fire-name">Waste Recycler</span>
-                        </div>
-                        <div class="fire-type locked" data-type="NATURE_WRATH">
-                            <span class="fire-key">4</span>
-                            <span class="fire-name">Nature's Wrath</span>
-                        </div>
-                    </div>
+        <!-- HUD overlay (rendered on canvas, but weapon sidebar is HTML) -->
+        <div class="weapon-sidebar" id="weapon-sidebar">
+            <div class="weapon-sidebar-title">WEAPONS</div>
+            <div class="weapon-slot active" data-weapon="0" id="weapon-0">
+                <span class="weapon-key">1</span>
+                <span class="weapon-icon weapon-icon-water"></span>
+                <div class="weapon-info">
+                    <span class="weapon-name">Water Cannon</span>
+                    <span class="weapon-status">EQUIPPED</span>
                 </div>
             </div>
-            <div class="hud-right">
-                <div class="hud-item">
-                    <span class="hud-label">LIVES</span>
-                    <span class="hud-value" id="hud-lives"></span>
+            <div class="weapon-slot locked" data-weapon="1" id="weapon-1">
+                <span class="weapon-key">2</span>
+                <span class="weapon-icon weapon-icon-solar"></span>
+                <div class="weapon-info">
+                    <span class="weapon-name">Solar Beam</span>
+                    <span class="weapon-status">500 PTS</span>
                 </div>
+            </div>
+            <div class="weapon-slot locked" data-weapon="2" id="weapon-2">
+                <span class="weapon-key">3</span>
+                <span class="weapon-icon weapon-icon-recycle"></span>
+                <div class="weapon-info">
+                    <span class="weapon-name">Recycling Ray</span>
+                    <span class="weapon-status">1500 PTS</span>
+                </div>
+            </div>
+            <div class="weapon-slot locked" data-weapon="3" id="weapon-3">
+                <span class="weapon-key">4</span>
+                <span class="weapon-icon weapon-icon-nature"></span>
+                <div class="weapon-info">
+                    <span class="weapon-name">Nature's Wrath</span>
+                    <span class="weapon-status">3000 PTS</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Help (right side) -->
+        <div class="controls-help" id="controls-help">
+            <div class="controls-help-title">CONTROLS</div>
+            <div class="control-hint">
+                <span class="control-hint-key">SPACE</span>
+                <span class="control-hint-desc">Jump</span>
+            </div>
+            <div class="control-hint">
+                <span class="control-hint-key">x2</span>
+                <span class="control-hint-desc">Double jump</span>
+            </div>
+            <div class="control-hint">
+                <span class="control-hint-key">S / DOWN</span>
+                <span class="control-hint-desc">Slide</span>
+            </div>
+            <div class="control-hint">
+                <span class="control-hint-key">Z / CLICK</span>
+                <span class="control-hint-desc">Shoot</span>
+            </div>
+            <div class="control-hint">
+                <span class="control-hint-key">1-4</span>
+                <span class="control-hint-desc">Switch weapon</span>
             </div>
         </div>
 
@@ -64,16 +85,37 @@
         <div class="overlay" id="start-overlay">
             <div class="overlay-content">
                 <h1 class="overlay-title">Jugaad Runner</h1>
-                <p class="overlay-subtitle">The Earth is choking. Run to heal it.</p>
-                <p class="overlay-instruction">SPACE / CLICK / TAP to jump<br>Double-tap for double jump</p>
-                <button class="btn-play" id="btn-start">BEGIN</button>
+                <p class="overlay-tagline">The Scrappy Eco Warrior</p>
+                <div class="overlay-story">
+                    Armed with nothing but a recycled jetpack and sheer determination, one kid stands between Earth and total environmental catastrophe. No pressure.
+                </div>
+                <div class="overlay-controls">
+                    <div class="control-group">
+                        <span class="control-key">SPACE / W / UP</span>
+                        <span class="control-desc">Jump (double tap = double jump)</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-key">S / DOWN</span>
+                        <span class="control-desc">Slide</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-key">Z / CLICK</span>
+                        <span class="control-desc">Shoot</span>
+                    </div>
+                    <div class="control-group">
+                        <span class="control-key">1-4 / SCROLL</span>
+                        <span class="control-desc">Switch weapon</span>
+                    </div>
+                </div>
+                <button class="btn-play" id="btn-start">BEGIN MISSION</button>
             </div>
         </div>
 
         <!-- Game over overlay -->
         <div class="overlay hidden" id="gameover-overlay">
             <div class="overlay-content">
-                <h1 class="overlay-title gameover-title">EARTH FELL SILENT</h1>
+                <h1 class="overlay-title gameover-title" id="gameover-title">GAME OVER</h1>
+                <p class="death-quip" id="death-quip"></p>
                 <div class="gameover-stats">
                     <div class="gameover-stat">
                         <span class="gameover-stat-value" id="final-score">0</span>
@@ -83,12 +125,28 @@
                         <span class="gameover-stat-value" id="final-distance">0m</span>
                         <span class="gameover-stat-label">DISTANCE</span>
                     </div>
+                    <div class="gameover-stat">
+                        <span class="gameover-stat-value" id="final-kills">0</span>
+                        <span class="gameover-stat-label">ENEMIES</span>
+                    </div>
+                    <div class="gameover-stat">
+                        <span class="gameover-stat-value" id="final-combo">0x</span>
+                        <span class="gameover-stat-label">BEST COMBO</span>
+                    </div>
                 </div>
                 <div class="eco-fact" id="eco-fact"></div>
                 <div class="gameover-buttons">
                     <button class="btn-play" id="btn-restart">PLAY AGAIN</button>
                     <a href="/" class="btn-back">BACK TO JUGAAD</a>
                 </div>
+            </div>
+        </div>
+
+        <!-- Weapon unlock notification -->
+        <div class="weapon-unlock hidden" id="weapon-unlock">
+            <div class="weapon-unlock-inner">
+                <span class="weapon-unlock-label">WEAPON UNLOCKED</span>
+                <span class="weapon-unlock-name" id="weapon-unlock-name"></span>
             </div>
         </div>
     </div>

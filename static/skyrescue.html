@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Rescue — Purify the Skies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/skyrescue.css">
+</head>
+<body>
+    <nav class="game-nav">
+        <a href="/" class="nav-back">JUGAAD</a>
+        <div class="nav-title">SKY RESCUE — PURIFY THE SKIES</div>
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <div class="game-wrapper">
+        <canvas id="game-canvas"></canvas>
+    </div>
+
+    <!-- Controls Help -->
+    <div class="controls-help" id="controls-help">
+        <h4>Controls</h4>
+        <div class="control-row"><span class="label">Move</span><span class="keys">A/D, Arrows</span></div>
+        <div class="control-row"><span class="label">Jump</span><span class="keys">W/Space/Up</span></div>
+        <div class="control-row"><span class="label">Fast Fall</span><span class="keys">S/Down</span></div>
+        <div class="control-row"><span class="label">Dash</span><span class="keys">Shift</span></div>
+        <div class="control-row"><span class="label">Fire</span><span class="keys">Z / Click</span></div>
+    </div>
+
+    <!-- Start Screen -->
+    <div class="start-overlay" id="start-overlay">
+        <div class="start-content">
+            <h1 class="start-title">SKY RESCUE</h1>
+            <p class="start-subtitle">Purify the Skies</p>
+            <div class="start-story">
+                The skies are choking. Pollution has turned the atmosphere into a toxic wasteland.
+                As the last Eco Guardian, only you can purify the heavens and restore breathable air
+                to Earth. Fly through three corrupted zones, collect purification crystals, and defeat
+                the pollution bosses that cloud the skies. Each victory heals the world around you.
+            </div>
+            <div class="start-controls">
+                <span class="key">WASD/Arrows</span> Move &amp; Jump &bull;
+                <span class="key">Shift</span> Dash &bull;
+                <span class="key">Z/Click</span> Fire Beam &bull;
+                <span class="key">Down</span> Fast Fall
+            </div>
+            <button class="btn-start" id="btn-start">BEGIN JOURNEY</button>
+        </div>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div class="end-overlay" id="gameover-overlay">
+        <div class="end-content">
+            <h2 class="end-title defeat" id="gameover-title">SKIES DARKEN</h2>
+            <p class="end-subtitle" id="gameover-subtitle">The pollution prevails... for now.</p>
+            <div class="end-stats" id="gameover-stats"></div>
+            <div class="eco-fact" id="gameover-fact"></div>
+            <div class="end-buttons">
+                <button class="btn-retry" id="btn-retry">TRY AGAIN</button>
+                <a href="/" class="btn-home">Return Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory Overlay -->
+    <div class="end-overlay" id="victory-overlay">
+        <div class="end-content">
+            <h2 class="end-title victory">SKIES RESTORED</h2>
+            <p class="end-subtitle">The Eco Guardian has purified the atmosphere.</p>
+            <div class="end-stats" id="victory-stats"></div>
+            <div class="eco-fact" id="victory-fact"></div>
+            <div class="end-buttons">
+                <button class="btn-retry" id="btn-replay">PLAY AGAIN</button>
+                <a href="/" class="btn-home">Return Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/skyrescue.js"></script>
+</body>
+</html>

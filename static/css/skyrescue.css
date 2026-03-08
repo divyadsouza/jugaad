@@ -1,0 +1,446 @@
+/* ==========================================================================
+   Sky Rescue — Purify the Skies
+   Matches the premium dark Jugaad aesthetic
+   ========================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-deep:      #011a14;
+    --bg-primary:   #022b23;
+    --border:       rgba(255, 216, 162, 0.1);
+    --border-glow:  rgba(255, 216, 162, 0.2);
+    --text-primary: #f9f8f8;
+    --text-secondary: #a8b5a0;
+    --text-dim:     #4a5e4a;
+    --gold:         #ffd8a2;
+    --gold-bright:  #ffe4b5;
+    --gold-glow:    rgba(255, 216, 162, 0.3);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:    'JetBrains Mono', 'Consolas', monospace;
+
+    --radius:    16px;
+    --radius-sm: 10px;
+    --radius-xs: 6px;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Navigation --- */
+.game-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 2rem;
+    position: relative;
+    z-index: 20;
+    flex-shrink: 0;
+}
+
+.game-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+}
+
+.nav-back {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.nav-back:hover {
+    opacity: 0.7;
+}
+
+.nav-title {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.nav-spacer {
+    width: 60px;
+}
+
+/* --- Game Wrapper --- */
+.game-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0.5rem;
+    min-height: 0;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    max-width: 960px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: #0a0a0a;
+    cursor: crosshair;
+}
+
+/* --- Start Overlay --- */
+.start-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(1, 26, 20, 0.92);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+    animation: overlay-in 0.6s ease;
+}
+
+.start-overlay.hidden {
+    display: none !important;
+}
+
+@keyframes overlay-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.start-content {
+    text-align: center;
+    max-width: 580px;
+    padding: 3rem 2.5rem;
+    background: rgba(2, 43, 35, 0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+}
+
+.start-content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.start-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #87CEEB 0%, var(--gold) 50%, #4ade80 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: sky-title-glow 4s ease-in-out infinite;
+}
+
+@keyframes sky-title-glow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+.start-subtitle {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.start-story {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    text-align: left;
+    padding: 1.25rem 1.5rem;
+    background: rgba(135, 206, 235, 0.06);
+    border-left: 2px solid #87CEEB;
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+}
+
+.start-controls {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    line-height: 2;
+    margin-bottom: 2rem;
+    letter-spacing: 0.04em;
+}
+
+.start-controls .key {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.btn-start {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 0.9rem 3.5rem;
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-start:hover {
+    background: var(--gold);
+    color: var(--bg-deep);
+    box-shadow: 0 0 40px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+/* --- Game Over / Victory Overlay --- */
+.end-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(1, 26, 20, 0.92);
+    backdrop-filter: blur(16px);
+    z-index: 100;
+}
+
+.end-overlay.active {
+    display: flex;
+    animation: overlay-in 0.5s ease;
+}
+
+.end-content {
+    text-align: center;
+    max-width: 540px;
+    padding: 2.5rem 2rem;
+    background: rgba(2, 43, 35, 0.6);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+}
+
+.end-content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.end-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.end-title.defeat {
+    color: #ef4444;
+}
+
+.end-title.victory {
+    background: linear-gradient(135deg, #87CEEB, var(--gold), #4ade80);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.end-subtitle {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.end-stats {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.end-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.end-stat-value {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.end-stat-label {
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.eco-fact {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 216, 162, 0.04);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    text-align: left;
+}
+
+.end-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-retry {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 0.8rem 3rem;
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-retry:hover {
+    background: var(--gold);
+    color: var(--bg-deep);
+    box-shadow: 0 0 40px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+.btn-home {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-home:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+/* --- Controls Help --- */
+.controls-help {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(1, 26, 20, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    z-index: 30;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    max-width: 220px;
+}
+
+.controls-help:hover {
+    opacity: 1;
+    border-color: var(--border-glow);
+}
+
+.controls-help h4 {
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+}
+
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.15rem 0;
+}
+
+.control-row .label {
+    color: var(--text-secondary);
+}
+
+.control-row .keys {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .game-nav { padding: 0.6rem 1rem; }
+    .game-nav::after { left: 1rem; right: 1rem; }
+    .start-content { padding: 2rem 1.5rem; margin: 0.5rem; }
+    .start-title { font-size: 2.2rem; }
+    .controls-help { display: none; }
+    .end-stats { gap: 1rem; }
+    .end-stat-value { font-size: 1.4rem; }
+}
