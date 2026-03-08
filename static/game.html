@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaad Runner — Environment Warrior</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/game.css">
+</head>
+<body>
+    <nav class="game-nav">
+        <a href="/" class="nav-back">JUGAAD</a>
+        <div class="nav-title">JUGAAD RUNNER</div>
+        <div class="nav-spacer"></div>
+    </nav>
+
+    <div class="game-wrapper" id="game-wrapper">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- HUD overlay -->
+        <div class="hud" id="hud">
+            <div class="hud-left">
+                <div class="hud-item">
+                    <span class="hud-label">SCORE</span>
+                    <span class="hud-value" id="hud-score">0</span>
+                </div>
+                <div class="hud-item">
+                    <span class="hud-label">DISTANCE</span>
+                    <span class="hud-value" id="hud-distance">0m</span>
+                </div>
+                <div class="hud-item fire-types" id="fire-types">
+                    <span class="hud-label">FIRE TYPE</span>
+                    <div class="fire-type-list">
+                        <div class="fire-type" data-type="PURIFICATION">
+                            <span class="fire-key">1</span>
+                            <span class="fire-name">Purification</span>
+                        </div>
+                        <div class="fire-type locked" data-type="SOLAR_FLARE">
+                            <span class="fire-key">2</span>
+                            <span class="fire-name">Solar Flare</span>
+                        </div>
+                        <div class="fire-type locked" data-type="WASTE_RECYCLER">
+                            <span class="fire-key">3</span>
+                            <span class="fire-name">Waste Recycler</span>
+                        </div>
+                        <div class="fire-type locked" data-type="NATURE_WRATH">
+                            <span class="fire-key">4</span>
+                            <span class="fire-name">Nature's Wrath</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div class="hud-item">
+                    <span class="hud-label">LIVES</span>
+                    <span class="hud-value" id="hud-lives"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start screen overlay -->
+        <div class="overlay" id="start-overlay">
+            <div class="overlay-content">
+                <h1 class="overlay-title">Jugaad Runner</h1>
+                <p class="overlay-subtitle">The Earth is choking. Run to heal it.</p>
+                <p class="overlay-instruction">SPACE / CLICK / TAP to jump<br>Double-tap for double jump</p>
+                <button class="btn-play" id="btn-start">BEGIN</button>
+            </div>
+        </div>
+
+        <!-- Game over overlay -->
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-content">
+                <h1 class="overlay-title gameover-title">EARTH FELL SILENT</h1>
+                <div class="gameover-stats">
+                    <div class="gameover-stat">
+                        <span class="gameover-stat-value" id="final-score">0</span>
+                        <span class="gameover-stat-label">SCORE</span>
+                    </div>
+                    <div class="gameover-stat">
+                        <span class="gameover-stat-value" id="final-distance">0m</span>
+                        <span class="gameover-stat-label">DISTANCE</span>
+                    </div>
+                </div>
+                <div class="eco-fact" id="eco-fact"></div>
+                <div class="gameover-buttons">
+                    <button class="btn-play" id="btn-restart">PLAY AGAIN</button>
+                    <a href="/" class="btn-back">BACK TO JUGAAD</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/game.js"></script>
+</body>
+</html>

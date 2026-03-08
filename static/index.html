@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugaad — The Art of Survival</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <!-- Ambient background layers -->
+    <div class="bg-grain"></div>
+    <div class="bg-glow bg-glow--1"></div>
+    <div class="bg-glow bg-glow--2"></div>
+    <div class="bg-glow bg-glow--3"></div>
+
+    <!-- ===== SCREEN 1: Landing ===== -->
+    <div class="screen screen-landing active" id="screen-landing">
+        <nav class="nav">
+            <div class="nav-brand">JUGAAD</div>
+            <div class="nav-tagline">The Art of Survival</div>
+            <a href="/game" class="nav-game-link">Play the Game</a>
+        </nav>
+
+        <div class="hero">
+            <h1>JUGAAD</h1>
+            <div class="tagline">The Art of Survival</div>
+            
+            <div class="hero-story">
+                In the year 2085, Earth's last ecosystems survive in digital archives. You are an Environmental Warrior, fighting through polluted wastelands to reclaim what was lost. Using Jugaad—the art of resourceful innovation—you transform waste into weapons and pollution into power. Each demon you defeat, each piece of trash you recycle, brings life back to a dying world. This is not just a game—it's our future. Will you fight for Earth?
+            </div>
+            
+            <div class="hero-orb" id="hero-orb">
+                <div class="hero-orb-inner"></div>
+                <div class="hero-orb-ring"></div>
+                <div class="hero-orb-ring hero-orb-ring--2"></div>
+            </div>
+        </div>
+
+        <div class="mode-section">
+            <div class="section-label">
+                <span class="section-label-line"></span>
+                SELECT YOUR MEMORY
+                <span class="section-label-line"></span>
+            </div>
+            <div class="mode-grid" id="mode-grid"></div>
+        </div>
+
+        <div class="launch-zone">
+            <button class="btn-launch" id="btn-launch" disabled>
+                <span class="btn-launch-text">Begin</span>
+                <span class="btn-launch-glow"></span>
+            </button>
+            <p class="launch-hint">Select a memory above, then speak.</p>
+        </div>
+    </div>
+
+    <!-- ===== SCREEN 2: Game ===== -->
+    <div class="screen screen-game" id="screen-game">
+        <nav class="nav nav-game">
+            <div class="nav-brand">JUGAAD</div>
+            <div class="nav-status">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </nav>
+
+        <!-- Waveform Visualizer -->
+        <div class="waveform-container" id="waveform-container">
+            <canvas id="waveform-canvas"></canvas>
+            <div class="waveform-label" id="waveform-label">THE ASSEMBLER</div>
+        </div>
+
+        <!-- Memory Cards Gallery -->
+        <div class="cards-section">
+            <div class="cards-gallery" id="cards-gallery"></div>
+        </div>
+
+        <!-- Transcript -->
+        <div class="transcript-panel" id="transcript">
+            <div class="transcript-empty">
+                <span>Listening for your memories...</span>
+            </div>
+        </div>
+
+        <!-- Speak Button -->
+        <div class="speak-zone" id="speak-zone">
+            <button class="btn-speak" id="btn-speak" disabled>
+                <svg class="btn-speak-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                </svg>
+                <span class="btn-speak-label" id="btn-speak-label">Speak</span>
+            </button>
+            <p class="speak-hint" id="speak-hint">Press to record your memory</p>
+        </div>
+
+        <!-- CO2 Counter -->
+        <div class="co2-bar" id="co2-bar">
+            <span class="co2-label">SESSION CO<sub>2</sub></span>
+            <span class="co2-value" id="co2-value">0.0g</span>
+        </div>
+    </div>
+
+    <!-- ===== SCREEN 3: Reveal (overlays on game screen) ===== -->
+    <div class="reveal-overlay" id="reveal-overlay">
+        <div class="reveal-content" id="reveal-content">
+            <div class="reveal-impact" id="reveal-impact"></div>
+        </div>
+    </div>
+
+    <!-- ===== Terminal Mode Overlay ===== -->
+    <div class="terminal-overlay" id="terminal-overlay">
+        <div class="terminal-content" id="terminal-content">
+            <div class="terminal-header">> JUGAAD // LOW POWER MODE</div>
+            <div class="terminal-body" id="terminal-body"></div>
+            <div class="terminal-prompt">> Say "exit" to return.</div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

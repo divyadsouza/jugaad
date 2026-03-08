@@ -1,0 +1,394 @@
+/* ==========================================================================
+   Jugaad Runner — Game Page Styles
+   Matches the premium dark Jugaad aesthetic
+   ========================================================================== */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg-deep:      #011a14;
+    --bg-primary:   #022b23;
+    --border:       rgba(255, 216, 162, 0.1);
+    --border-glow:  rgba(255, 216, 162, 0.2);
+    --text-primary: #f9f8f8;
+    --text-secondary: #a8b5a0;
+    --text-dim:     #4a5e4a;
+    --gold:         #ffd8a2;
+    --gold-bright:  #ffe4b5;
+    --gold-glow:    rgba(255, 216, 162, 0.3);
+
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:    'JetBrains Mono', 'Consolas', monospace;
+
+    --radius:    16px;
+    --radius-sm: 10px;
+    --radius-xs: 6px;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Navigation --- */
+.game-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 2rem;
+    position: relative;
+    z-index: 20;
+    flex-shrink: 0;
+}
+
+.game-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+}
+
+.nav-back {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.nav-back:hover {
+    opacity: 0.7;
+}
+
+.nav-title {
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.nav-spacer {
+    width: 60px;
+}
+
+/* --- Game Wrapper --- */
+.game-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0.5rem;
+    min-height: 0;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: #0a0a0a;
+    cursor: pointer;
+    /* Height set dynamically by JS based on aspect ratio */
+}
+
+/* --- HUD Overlay --- */
+.hud {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 880px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.hud-left, .hud-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.hud-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    background: rgba(1, 26, 20, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xs);
+    padding: 0.35rem 0.75rem;
+}
+
+.hud-label {
+    font-family: var(--font-body);
+    font-size: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+.hud-value {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--gold);
+}
+
+/* --- Fire Types --- */
+.fire-types {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0.5rem !important;
+    min-width: 150px;
+}
+
+.fire-type-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    width: 100%;
+}
+
+.fire-type {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.fire-type:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.fire-type.active {
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid var(--gold);
+}
+
+.fire-type.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.fire-key {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    min-width: 1rem;
+    text-align: center;
+}
+
+.fire-name {
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.fire-type.active .fire-name {
+    color: var(--gold);
+}
+
+/* --- Overlays (Start / Game Over) --- */
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(1, 26, 20, 0.88);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    z-index: 50;
+    animation: overlay-in 0.5s ease;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+@keyframes overlay-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.overlay-content {
+    text-align: center;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+.overlay-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.75rem;
+}
+
+.gameover-title {
+    color: #ef4444;
+}
+
+.overlay-subtitle {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.overlay-instruction {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+/* --- Buttons --- */
+.btn-play {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    padding: 0.8rem 3rem;
+    border: 1px solid var(--gold);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--gold);
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-play:hover {
+    background: var(--gold);
+    color: var(--bg-deep);
+    box-shadow: 0 0 40px var(--gold-glow);
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--text-dim);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+/* --- Game Over Stats --- */
+.gameover-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.gameover-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.gameover-stat-value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.gameover-stat-label {
+    font-family: var(--font-body);
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+}
+
+/* --- Eco Fact --- */
+.eco-fact {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 216, 162, 0.04);
+    border-left: 2px solid var(--gold);
+    border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+    text-align: left;
+}
+
+.gameover-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .game-nav { padding: 0.6rem 1rem; }
+    .game-nav::after { left: 1rem; right: 1rem; }
+    .hud { padding: 0 0.75rem; }
+    .hud-item { padding: 0.25rem 0.5rem; }
+    .hud-value { font-size: 0.75rem; }
+    .overlay-content { padding: 1.5rem; }
+    .gameover-stats { gap: 1rem; }
+    .gameover-stat-value { font-size: 1.5rem; }
+}
